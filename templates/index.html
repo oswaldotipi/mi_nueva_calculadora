@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peruvian Customized Reference Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 3px;
+        }
+        input, select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 15px;
+        }
+        .result p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                padding: 0 10px;
+            }
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Peruvian Customized Reference Calculator</h1>
+        
+        <form method="POST">
+            <div class="form-group">
+                <label for="gestational_age">Gestational Age (weeks):</label>
+                <select id="gestational_age" name="gestational_age" required>
+                    {% for i in range(24, 41) %}
+                    <option value="{{ i }}" {% if gestational_age == i %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fetal_sex">Fetal Sex:</label>
+                <select id="fetal_sex" name="fetal_sex" required>
+                    <option value="0" {% if fetal_sex == 0 %}selected{% endif %}>Female</option>
+                    <option value="1" {% if fetal_sex == 1 %}selected{% endif %}>Male</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="maternal_height">Maternal Height (meters):</label>
+                <input type="number" id="maternal_height" name="maternal_height" step="0.01" min="1.30" max="1.90" value="{{ maternal_height }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pre_pregnancy_weight">Pre-pregnancy Weight (kg):</label>
+                <input type="number" id="pre_pregnancy_weight" name="pre_pregnancy_weight" step="0.1" min="30" max="100" value="{{ pre_pregnancy_weight }}" required>
+            </div>
+            <div class="form-group">
+                <label for="observed_fetal_weight">Observed Fetal Weight (grams):</label>
+                <input type="number" id="observed_fetal_weight" name="observed_fetal_weight" min="800" max="5000" value="{{ observed_fetal_weight }}" required>
+            </div>
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result">
+            {% if z_score is not none and percentile is not none %}
+            <p>Z-score: {{ z_score }}</p>
+            <p>Percentile: {{ percentile }}</p>
+            {% endif %}
+        </div>
+
+        <div class="footer">
+            <p>Developed by Dr. Oswaldo Tipiani</p>
+        </div>
+    </div>
+</body>
+</html>
